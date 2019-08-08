@@ -14,7 +14,7 @@ import java.net.InetAddress;
 public class PodDemoController {
     private static final Logger logger = LoggerFactory.getLogger(PodDemoController.class);
 
-    private static final int VERSION = 2;
+    private static final int VERSION = 1;
 
     @Value( "${value}" )
     private String value;
@@ -31,7 +31,7 @@ public class PodDemoController {
     public String getFile() throws Exception {
         logMethodCalled();
 
-        File file = new File("application.properties");
+        File file = new File("/config/application.properties");
         String data = FileUtils.readFileToString(file, "UTF-8");
 
         return "Value from the file : [ \n" + data + "\n ] ";

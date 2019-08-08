@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: oso-demo-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: oso-demo
+    spec:
+      containers:
+      - name: pod-demo
+        image: eduardopax/pod-demo:v2
+        ports:
+        - name: oso-demo-port
+          containerPort: 8080
+        volumeMounts:
+          - name: config-volume
+            mountPath: /config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: oso-demo-configmap
+            items:
+              - key: app.values
+                path: application.properties

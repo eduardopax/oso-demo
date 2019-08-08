@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{.Chart.Name}}-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{.Chart.Name}}
+    spec:
+      containers:
+      - name: pod-demo
+        image: eduardopax/pod-demo:v1
+        ports:
+        - name: {{.Chart.Name}}-port
+          containerPort: 8080
+        volumeMounts:
+          - name: config-volume
+            mountPath: /config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{.Chart.Name}}-configmap
+            items:
+              - key: app.values
+                path: application.properties

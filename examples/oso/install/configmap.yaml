@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oso-demo-configmap
+  labels:
+    label1: oso-demo
+data:
+  # When the config map is mounted as a volume, these will be created as files.
+  app.values: value=Value configMap

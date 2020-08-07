@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: oso-demo-route
+spec:
+
+  path: /any/v1/hostname
+  to:
+    name: oso-demo-service
+  port:
+    targetPort: 8080

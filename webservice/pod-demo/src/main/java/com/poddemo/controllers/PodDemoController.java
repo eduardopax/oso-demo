@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 import java.net.InetAddress;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 @RestController
 public class PodDemoController {
@@ -18,6 +22,15 @@ public class PodDemoController {
 
     @Value( "${value}" )
     private String value;
+
+    @Value("${datasource.url}")
+    private String datasourceUrl;
+
+    @Value("${datasource.username}")
+    private String datasourceUsername;
+
+    @Value("${datasource.password}")
+    private String datasourcePassword;
 
 
     @GetMapping("/load/memory")
@@ -52,6 +65,24 @@ public class PodDemoController {
     public String getVersion(){
         logMethodCalled();
         return "Version: [ " + VERSION + " ] ";
+    }
+
+    @GetMapping("/database-hostname")
+    public String database(){
+        String values = "";
+        try{
+            Class.forName("org.mariadb.jdbc.Driver");
+            Connection con= DriverManager.getConnection(
+                    datasourceUrl,datasourceUsername,datasourcePassword);
+
+            Statement stmt=con.createStatement();
+            ResultSet rs=stmt.executeQuery("show variables where Variable_name like '%hostname%';");
+            while(rs.next())
+                values = rs.getString("Variable_name") + " - " + rs.getString("Value");
+                System.out.println(values);
+            con.close();
+        }catch(Exception e){ System.out.println(e);}
+        return values;
     }
 
     private void logMethodCalled() {

@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: oso-demo-2-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webbox2
+    spec:
+      containers:
+        - name: webbox-2
+          image: eduardopax/webbox:v3
+          ports:
+            - name: oso-demo-2-port
+              containerPort: 8080
+

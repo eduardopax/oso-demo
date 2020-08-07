@@ -1,0 +1,21 @@
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: webbox-deployment
+    labels:
+      app: webbox
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: webbox
+    template:
+      metadata:
+        labels:
+          app: webbox
+      spec:
+        containers:
+          - name: webbox
+            image: eduardopax/webbox:v3
+            ports:
+              - containerPort: 80

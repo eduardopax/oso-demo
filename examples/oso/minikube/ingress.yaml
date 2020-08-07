@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: webbox-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: webbox
+              servicePort: 8080
+          - path: /any/v2/
+            backend:
+              serviceName: webbox2
+              servicePort: 8080
